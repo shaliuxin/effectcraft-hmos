@@ -1,0 +1,28 @@
+# DevEco / hvigor
+node_modules/
+oh_modules/
+.hvigor/
+.idea/
+**/build/
+entry/.cxx/
+local.properties
+**/.deveco/
+
+# Rust
+native/rust/target/
+target/
+**/*.rs.bk
+Cargo.lock.local
+
+# 签名材料（本机私有，不入库）
+signing/
+build-profile.local.json5
+
+# 诊断截图 / 临时日志
+*.jpeg
+*.jpg
+*.png.bak
+*.log
+
+# 上游源码（单独克隆在兄弟目录）
+effectcraft/
