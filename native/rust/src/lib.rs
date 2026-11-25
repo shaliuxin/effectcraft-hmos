@@ -727,6 +727,20 @@ fn request_file_dialog(dialog: FileDialog) -> Result<Vec<String>, String> {
         }
         FileDialog::OpenProject => pick_paths("openproject", ""),
         FileDialog::Folder => pick_paths("pickfolder", ""),
+        // 0.25.1 新增：脚本触发的文件对话框（File.openDialog / Folder.selectDialog /
+        // File.saveDialog）。语义等价于上面的打开 / 选夹 / 保存，复用同一套 ArkTS 通道；
+        // prompt/start/label 是脚本侧的标题与起始路径，鸿蒙文件选择器无对应概念，忽略。
+        FileDialog::Script { exts, any, many, .. } => {
+            let exts = if any { Vec::new() } else { exts }; // any=接受任意文件 → 无扩展过滤
+            let req = serde_json::json!({ "exts": exts, "many": many }).to_string();
+            pick_paths("openfiles", &req)
+        }
+        FileDialog::ScriptFolder { .. } => pick_paths("pickfolder", ""),
+        FileDialog::ScriptSave { default, exts, any, .. } => {
+            let ext = if any { String::new() } else { exts.into_iter().next().unwrap_or_default() };
+            let req = serde_json::json!({ "default": default, "ext": ext }).to_string();
+            pick_paths("savefile", &req)
+        }
         FileDialog::Save { default, ext, .. } => {
             let req = serde_json::json!({ "default": default, "ext": ext }).to_string();
             pick_paths("savefile", &req)
