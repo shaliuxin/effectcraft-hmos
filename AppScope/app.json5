@@ -2,8 +2,8 @@
   "app": {
     "bundleName": "io.github.shaliuxin.effectcraft.hmos",
     "vendor": "effectcraft-hmos",
-    "versionCode": 2501,
-    "versionName": "0.25.1",
+    "versionCode": 2502,
+    "versionName": "0.25.2",
     "icon": "$media:app_icon",
     "label": "$string:app_name"
   }
